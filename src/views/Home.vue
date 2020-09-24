@@ -1,17 +1,21 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Home"/>
+    <Header msg="Welcome to SARAH JOBS"/>
+    <Media />
+    <Footer />
   </div>
 </template>
 
 <script>
-import HelloWorld from '@/components/HelloWorld.vue'
+import Header from '@/components/Header.vue'
+import Media from '@/components/Media.vue'
+import Footer from '@/components/Footer.vue'
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld
+    Header, Media, Footer
   }
 }
 </script>

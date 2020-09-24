@@ -1,9 +1,8 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import Home from '../views/Home.vue';
-import About from '../views/About.vue';
-import Favourite from '../views/Favourite.vue';
-import Job from '../views/Job.vue';
-import MyJob from '../views/MyJob.vue';
+import { createRouter, createWebHistory } from 'vue-router'
+import Home from '../views/Home.vue'
+import Favourite from '../views/Favourite.vue'
+import Job from '../views/Job.vue'
+import MyJob from '../views/MyJob.vue'
 
 const routes = [
   {
@@ -20,11 +19,6 @@ const routes = [
     path: '/favourites',
     name: 'Favourite',
     component: Favourite
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: About
   },
   {
     path: '/my/jobs',
