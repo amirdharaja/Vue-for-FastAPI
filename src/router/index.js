@@ -3,6 +3,8 @@ import Home from '../views/Home.vue'
 import Favourite from '../views/Favourite.vue'
 import Job from '../views/Job.vue'
 import MyJob from '../views/MyJob.vue'
+import Login from '../views/Login.vue'
+import Signup from '../views/Signup.vue'
 
 const routes = [
   {
@@ -24,6 +26,16 @@ const routes = [
     path: '/my/jobs',
     name: 'MyJob',
     component: MyJob
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/signup',
+    name: 'Signup',
+    component: Signup
   }
 ]
 
