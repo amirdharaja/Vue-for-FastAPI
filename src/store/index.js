@@ -87,6 +87,17 @@ export default createStore({
       })
     },
 
+    async postCategory (_, data) {
+      data.user_id = this.state.user_id
+      await api.postCategory(data).then(response => {
+        alert('CATEGORY CREATED')
+        window.location.replace('/job/create')
+      }).catch(error => {
+        alert('UNABLE TO CREATE, TRY AGAIN')
+        console.log(error.response.text, error.response.status)
+      })
+    },
+
     async postJob (_, newJobData) {
       newJobData.user_id = this.state.user_id
       await api.postJob(newJobData).then(response => {

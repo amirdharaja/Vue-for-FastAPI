@@ -10,13 +10,16 @@ export default {
   fetchCategories: () => {
     return request.get(`${BASE_URL}/jobs/category`).accept('json')
   },
-  register: (newUserData) => {
-    return request.post(`${BASE_URL}/users`, newUserData).accept('json')
+  register: (data) => {
+    return request.post(`${BASE_URL}/users`, data).accept('json')
   },
-  login: (credentials) => {
-    return request.post(`${BASE_URL}/auth/login`, credentials).accept('json')
+  login: (data) => {
+    return request.post(`${BASE_URL}/auth/login`, data).accept('json')
   },
-  postJob: (newJobData) => {
-    return request.post(`${BASE_URL}/jobs`, newJobData).set({ token: TOKEN, Accept: 'application/json' })
+  postJob: (data) => {
+    return request.post(`${BASE_URL}/jobs`, data).set({ token: TOKEN, Accept: 'application/json' })
+  },
+  postCategory: (data) => {
+    return request.post(`${BASE_URL}/jobs/category`, data).set({ token: TOKEN, Accept: 'application/json' })
   }
 }

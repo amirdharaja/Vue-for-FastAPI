@@ -1,11 +1,16 @@
 <template>
 <form @submit.prevent='submit' class="container">
-   <div class="form-group">
+
     <label for='category'>Category</label>
-    <select class="form-control" type="text" name='category' id="category" v-model="form.category">
+  <div class="input-group mb-3">
+  <select class="form-control" type="text" name='category' id="category" v-model="form.category">
         <option v-for="category in categories" :key="category.id">{{ category.name }}</option>
     </select>
+  <div class="input-group-prepend">
+    <a href="/job/category"><button class="btn btn-outline-secondary" type="button">Add</button></a>
   </div>
+</div>
+
   <div class="form-group">
     <input placeholder="Company Name" class="form-control" type="text" name='company_name' id="company_name" v-model="form.company_name" />
   </div>
