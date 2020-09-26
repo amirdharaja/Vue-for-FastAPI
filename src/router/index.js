@@ -5,6 +5,7 @@ import Job from '../views/Job.vue'
 import MyJob from '../views/MyJob.vue'
 import Login from '../views/Login.vue'
 import Signup from '../views/Signup.vue'
+import PostJob from '../views/PostJob.vue'
 
 const routes = [
   {
@@ -16,6 +17,11 @@ const routes = [
     path: '/jobs',
     name: 'Job',
     component: Job
+  },
+  {
+    path: '/job/create',
+    name: 'PostJob',
+    component: PostJob
   },
   {
     path: '/favourites',

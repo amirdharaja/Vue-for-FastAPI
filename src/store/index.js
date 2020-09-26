@@ -1,8 +1,9 @@
 import { createStore } from 'vuex'
 import api from '../api'
+import VueJwtDecode from 'vue-jwt-decode'
 
 const JOBS = 'JOBS'
-// const MY_JOBS = 'MY_JOBS'
+const CATEGORIES = 'CATEGORIES'
 // const FAVOURITE_JOBS = 'FAVOURITE_JOBS'
 // const MY_ACCOUNT = 'MY_ACCOUNT'
 
@@ -11,18 +12,36 @@ export default createStore({
   state: {
     token: null,
     isAuthenticated: false,
+    role: null,
+    user_id: null,
+    categories: [],
     jobs: [],
     credentials: [{ username: '', password: '' }],
     registerActive: false
   },
 
   getters: {
-    authenticated () {
+    authenticated (state) {
       const token = localStorage.getItem('token')
       const expirationDate = new Date(localStorage.getItem('expirationDate'))
       if (token === undefined || !token) return false
       else if (expirationDate <= new Date()) return false
-      else return true
+      else {
+        try {
+          const user = VueJwtDecode.decode(token)
+          console.log(user.user_id)
+          if (!user) return false
+          else {
+            state.token = token
+            state.isAuthenticated = true
+            state.role = user.role
+            state.user_id = user.user_id
+            return true
+          }
+        } catch {
+          return false
+        }
+      }
     }
   },
 
@@ -38,6 +57,9 @@ export default createStore({
     },
     JOBS (state, jobs) {
       state.jobs = jobs
+    },
+    CATEGORIES (state, categories) {
+      state.categories = categories
     }
   },
 
@@ -45,6 +67,11 @@ export default createStore({
     getJobs ({ commit }) {
       api.fetchJobs().then(response => {
         commit(JOBS, response.body)
+      })
+    },
+    getCategories ({ commit }) {
+      api.fetchCategories().then(response => {
+        commit(CATEGORIES, response.body)
       })
     },
 
@@ -56,6 +83,16 @@ export default createStore({
         localStorage.setItem('role', response.body.role)
         window.location.replace('/login')
       }).catch(error => {
+        console.log(error.response.text, error.response.status)
+      })
+    },
+
+    async postJob (_, newJobData) {
+      newJobData.user_id = this.state.user_id
+      await api.postJob(newJobData).then(response => {
+        alert('JOB POSTED')
+      }).catch(error => {
+        alert('UNABLE TO POST JOB, TRY AGAIN')
         console.log(error.response.text, error.response.status)
       })
     },
