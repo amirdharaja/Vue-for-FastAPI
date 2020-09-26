@@ -1,6 +1,9 @@
 <template>
   <div class="container" id="app">
     <span v-if="role === 'recruiter'">
+      <div v-if="!postedJobs || postedJobs.length === 0">
+        <h5 style="color: white; background-color: orange">YOU DONT HAVE ANY PREVIOUS POSTS</h5>
+      </div>
       <ul class="nav justify-content-center">
         <li class="nav-item">
           <a class="nav-link" href="#"></a>
@@ -8,13 +11,9 @@
         <li class="nav-item">
           <a class="nav-link" href="/job/create"><button class="btn btn-primary btn-sm">POST JOB</button></a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/job/posted"><button class="btn btn-outline-primary btn-sm">POSTED JOBS</button></a>
-        </li>
       </ul>
       <br />
-    </span>
-    <div v-for="job in jobs" :key="job.id">
+    <div v-for="job in postedJobs" :key="job.id">
       <div class="card bg-light text-dark">
         <div class='card__heading'>
           <h5><b>{{ job.job_title }}</b> <span>at</span> {{ job.company_name }}</h5>
@@ -25,20 +24,16 @@
           <h6 id='count'><b>Required : </b>{{ job.job_count }} No(s)</h6>
           <h6 id='type-location'><b>{{ job.job_type }}</b> | {{ job.location }}</h6>
         </div>
-        <div class="card__confirm">
-          <span v-if = "authenticated">
-          <form @submit.prevent='apply (job.id)'>
-            <input name="job_id" value={{job.id}} hidden />
-            <button class="btn btn-light" type="submit">APPLY</button>
+        <div class="card__actions">
+          <form @submit.prevent='remove (job.id)'>
+              <button class="btn btn-outline-danger btn-sm" type="submit">REMOVE JOB</button>
           </form>
-          </span>
-          <span v-else>
-          <button class="btn btn-secondary btn-sm" disabled>APPLY</button>
-          </span>
         </div>
       </div>
       <br />
     </div>
+    </span>
+    <span v-else><h4 style="color: white; background-color: red">You dont have access rights of this page</h4></span>
   </div>
     <Footer />
 </template>
@@ -50,7 +45,7 @@ import Footer from '../components/Footer'
 export default {
   components: { Footer },
   computed: {
-    ...mapState(['jobs', 'role']),
+    ...mapState(['postedJobs', 'role']),
     ...mapGetters(['authenticated'])
   },
   data () {
@@ -61,14 +56,14 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('getJobs')
+    this.$store.dispatch('getPostedJobs')
   },
   methods: {
     ...mapActions({
-      applyJob: 'applyJob'
+      removeJob: 'removeJob'
     }),
-    async apply (jobID) {
-      this.applyJob(jobID)
+    async remove (jobID) {
+      this.removeJob(jobID)
     }
   }
 }

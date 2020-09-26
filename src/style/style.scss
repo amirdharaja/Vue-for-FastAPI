@@ -141,7 +141,35 @@
   #type-location b{
     text-transform: uppercase;
   }
-
+  .card__status h6{
+    padding: 10px;
+    font-weight: bold;
+  }
+  .card__status #created{
+    background-color: rgb(233, 233, 86);
+  }
+  .card__status #applied{
+    background-color: rgb(236, 236, 236);
+  }
+  .card__status #selected{
+    background-color: rgb(36, 212, 36);
+  }
+  .card__status #rejected{
+    background-color:rgb(212, 40, 40);
+    color: white;
+  }
+  .card__status #filled{
+    background-color:rgb(23, 130, 192);
+    color: white;
+  }
+  .card__status #closed{
+    background-color:rgb(148, 148, 148);
+    color: rgb(255, 255, 255);
+  }
+  .card__status #deleted{
+    background-color:rgb(145, 29, 29);
+    color: rgb(255, 255, 255);
+  }
 }
   .card:hover{
     box-shadow: 0 0 5px rgb(57, 179, 57);

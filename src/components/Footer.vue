@@ -34,11 +34,8 @@
         <div class="col-xs-6 col-md-3">
           <h6>Quick Links</h6>
           <ul class="footer-links">
-            <li><router-link to="/">Home</router-link></li>
-            <li><router-link to="/about">About</router-link></li>
-            <li><router-link to="/jobs">Jobs</router-link></li>
-            <li><router-link to="/my/jobs">My Jobs</router-link></li>
-            <li><router-link to="/favourites">Favourites</router-link></li>
+            <li><router-link :to="{name: 'Home'}">Home</router-link></li>
+            <li><router-link :to="{name: 'Job'}">Jobs</router-link></li>
           </ul>
         </div>
       </div>

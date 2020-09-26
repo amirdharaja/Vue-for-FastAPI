@@ -46,13 +46,18 @@
   <div>
     <button type="submit" class="btn btn-outline-primary btn-block">POST JOB</button>
   </div>
+  <br />
 </form>
+<Footer />
 </template>
 
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex'
+import Footer from '../components/Footer'
+
 export default {
   name: 'postJob',
+  components: { Footer },
   computed: {
     ...mapState(['categories']),
     ...mapGetters(['authenticated'])

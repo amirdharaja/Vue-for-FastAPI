@@ -6,6 +6,7 @@ import MyJob from '../views/MyJob.vue'
 import Login from '../views/Login.vue'
 import Signup from '../views/Signup.vue'
 import PostJob from '../views/PostJob.vue'
+import PostedJobs from '../views/PostedJobs.vue'
 import PostCategory from '../views/PostCategory.vue'
 
 const routes = [
@@ -23,6 +24,11 @@ const routes = [
     path: '/job/create',
     name: 'PostJob',
     component: PostJob
+  },
+  {
+    path: '/job/posted',
+    name: 'PostedJobs',
+    component: PostedJobs
   },
   {
     path: '/job/category',

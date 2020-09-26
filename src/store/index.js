@@ -4,8 +4,8 @@ import VueJwtDecode from 'vue-jwt-decode'
 
 const JOBS = 'JOBS'
 const CATEGORIES = 'CATEGORIES'
-// const FAVOURITE_JOBS = 'FAVOURITE_JOBS'
-// const MY_ACCOUNT = 'MY_ACCOUNT'
+const MY_JOBS = 'MY_JOBS'
+const POSTED_JOBS = 'POSTED_JOBS'
 
 export default createStore({
   namesapced: true,
@@ -14,8 +14,6 @@ export default createStore({
     isAuthenticated: false,
     role: null,
     user_id: null,
-    categories: [],
-    jobs: [],
     credentials: [{ username: '', password: '' }],
     registerActive: false
   },
@@ -29,7 +27,6 @@ export default createStore({
       else {
         try {
           const user = VueJwtDecode.decode(token)
-          console.log(user.user_id)
           if (!user) return false
           else {
             state.token = token
@@ -58,6 +55,14 @@ export default createStore({
     JOBS (state, jobs) {
       state.jobs = jobs
     },
+    POSTED_JOBS (state, jobs) {
+      state.postedJobs = jobs.Jobs
+    },
+    MY_JOBS (state, jobs) {
+      console.log(jobs.Jobs)
+      state.myJobs = jobs.Jobs
+      state.myJobsTotal = jobs.Total
+    },
     CATEGORIES (state, categories) {
       state.categories = categories
     }
@@ -69,14 +74,24 @@ export default createStore({
         commit(JOBS, response.body)
       })
     },
+    getPostedJobs ({ commit }) {
+      api.fetchPostedJobs().then(response => {
+        commit(POSTED_JOBS, response.body)
+      })
+    },
+    getMyJobs ({ commit }) {
+      api.fetchMyJobs().then(response => {
+        commit(MY_JOBS, response.body)
+      })
+    },
     getCategories ({ commit }) {
       api.fetchCategories().then(response => {
         commit(CATEGORIES, response.body)
       })
     },
 
-    async register (_, newUserData) {
-      await api.register(newUserData).then(response => {
+    async register (_, data) {
+      await api.register(data).then(response => {
         localStorage.setItem('username', response.body.username)
         localStorage.setItem('first_name', response.body.first_name)
         localStorage.setItem('last_name', response.body.last_name)
@@ -98,12 +113,33 @@ export default createStore({
       })
     },
 
-    async postJob (_, newJobData) {
-      newJobData.user_id = this.state.user_id
-      await api.postJob(newJobData).then(response => {
+    async postJob (_, data) {
+      data.user_id = this.state.user_id
+      await api.postJob(data).then(response => {
         alert('JOB POSTED')
+        window.location.replace('/jobs')
       }).catch(error => {
         alert('UNABLE TO POST JOB, TRY AGAIN')
+        console.log(error.response.text, error.response.status)
+      })
+    },
+
+    async applyJob (_, jobID) {
+      await api.applyJob(jobID).then(response => {
+        alert('APPLIED!')
+      }).catch(error => {
+        if (error.response.status === 406) alert('ALREADY APPLIED')
+        else alert('UNABLE TO  APPLY, TRY AGAIN')
+        console.log(error.response.text, error.response.status)
+      })
+    },
+
+    async removeJob (_, jobID) {
+      await api.removeJob(jobID).then(response => {
+        alert('REMOVED!')
+        window.location.replace('/job/posted')
+      }).catch(error => {
+        alert('UNABLE TO  REMOVE, TRY AGAIN')
         console.log(error.response.text, error.response.status)
       })
     },

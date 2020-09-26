@@ -4,7 +4,6 @@
     <router-link :to="{name: 'Job'}">Jobs</router-link> |
     <span v-if="authenticated">
     <router-link :to="{name: 'MyJob'}">My Jobs</router-link> |
-    <router-link :to="{name: 'Favourite'}">Favourites</router-link> |
     <button class="btn btn-outline-danger btn-sm" @click="logout">Logout</button>
     </span>
     <span v-else>

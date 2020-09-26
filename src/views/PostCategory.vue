@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="container" id="app">
   <form v-if="authenticated" @submit.prevent='submit' class="container">
   <div class="form-group">
     <input placeholder="Category Name" class="form-control" type="text" name='name' id="name" v-model="form.name"  />
@@ -13,11 +13,15 @@
 <a href="/"><button class="btn btn-primary">GO HOME</button></a>
 </div>
 </div>
+<Footer />
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import Footer from '../components/Footer'
+
 export default {
+  components: { Footer },
   name: 'postCategory',
   computed: {
     ...mapGetters(['authenticated'])
